@@ -17,9 +17,7 @@ const Auth = ({ setUser }) => {
         setLoading(true);
         setError('');
         try {
-            const { data } = isLogin
-                ? await login(formData.email, formData.password)
-                : await signup(formData);
+            const { data } = await login(formData.email, formData.password);
 
             localStorage.setItem('userInfo', JSON.stringify(data));
             setUser(data);
@@ -36,7 +34,7 @@ const Auth = ({ setUser }) => {
                 <div className="text-center mb-10">
                     <h2 className="text-4xl font-black text-primary tracking-tighter">NK DIGITAL</h2>
                     <p className="text-gray-500 mt-2 font-medium">
-                        {isLogin ? 'Welcome back, Admin' : 'Create Admin Account'}
+                        Welcome back, Admin
                     </p>
                 </div>
 
@@ -47,20 +45,6 @@ const Auth = ({ setUser }) => {
                 )}
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    {!isLogin && (
-                        <div className="relative">
-                            <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-                            <input
-                                type="text"
-                                required
-                                placeholder="Full Name"
-                                className="w-full bg-gray-100 border-none rounded-2xl py-4 pl-12 pr-4 focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                                value={formData.name}
-                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                            />
-                        </div>
-                    )}
-
                     <div className="relative">
                         <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
                         <input
@@ -92,21 +76,12 @@ const Auth = ({ setUser }) => {
                     >
                         {loading ? 'Processing...' : (
                             <>
-                                {isLogin ? 'Login' : 'Sign Up'}
+                                Login
                                 <ArrowRight className="w-5 h-5" />
                             </>
                         )}
                     </button>
                 </form>
-
-                <div className="mt-8 text-center">
-                    <button
-                        onClick={() => setIsLogin(!isLogin)}
-                        className="text-sm font-bold text-gray-500 hover:text-primary transition-colors"
-                    >
-                        {isLogin ? "Don't have an account? Sign Up" : "Already have an account? Login"}
-                    </button>
-                </div>
             </div>
         </div>
     );

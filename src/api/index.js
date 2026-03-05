@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-    baseURL: 'http://localhost:5000/api',
+    baseURL: 'https://nkdigital-backend.vercel.app/api',
 });
 
 // Set token in headers
@@ -19,5 +19,6 @@ export const deleteBlog = (id) => API.delete(`/blogs/${id}`);
 
 export const login = (email, password) => API.post('/users/login', { email, password });
 export const signup = (userData) => API.post('/users/signup', userData);
+export const updateProfile = (userData) => API.put('/users/profile', userData);
 
 export default API;

@@ -43,7 +43,12 @@ const PinCard = ({ pin }) => {
 
             <div className="mt-2 px-1">
                 <h3 className="font-bold text-sm truncate">{pin.title}</h3>
-                <p className="text-gray-500 text-xs mt-1">{pin.author} • {pin.category}</p>
+                <div className="flex flex-wrap gap-1 mt-1">
+                    {pin.hashtags && pin.hashtags.map((tag, i) => (
+                        <span key={i} className="text-[10px] text-primary font-bold">#{tag}</span>
+                    ))}
+                </div>
+                <p className="text-gray-500 text-[10px] mt-1">{pin.author} • {pin.category}</p>
             </div>
         </motion.div>
     );
