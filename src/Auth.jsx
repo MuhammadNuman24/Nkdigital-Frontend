@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import logo from './assets/nklogo.png';
 import { Mail, Lock, User as UserIcon, ArrowRight } from 'lucide-react';
 import { login, signup } from './api';
