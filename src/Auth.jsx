@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import logo from './assets/nklogo.png';
 import { Mail, Lock, User as UserIcon, ArrowRight } from 'lucide-react';
 import { login, signup } from './api';
 
@@ -32,7 +32,7 @@ const Auth = ({ setUser }) => {
         <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
             <div className="max-w-md w-full bg-white rounded-3xl shadow-2xl p-8">
                 <div className="text-center mb-10">
-                    <h2 className="text-4xl font-black text-primary tracking-tighter">NK DIGITAL</h2>
+                    <img src={logo} alt="NK DIGITAL" className="h-16 mx-auto mb-2 object-contain" />
                     <p className="text-gray-500 mt-2 font-medium">
                         Welcome back, Admin
                     </p>
