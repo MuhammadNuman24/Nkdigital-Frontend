@@ -5,6 +5,10 @@ import Admin from './Admin';
 import Auth from './Auth';
 import SingleBlog from './SingleBlog';
 
+import About from './About';
+import Contact from './Contact';
+import Explore from './Explore';
+
 const App = () => {
   const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -35,6 +39,9 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/blog/:id" element={<SingleBlog />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/explore" element={<Explore />} />
           <Route 
             path="/admin" 
             element={user ? <Admin /> : <Auth setUser={setUser} />} 

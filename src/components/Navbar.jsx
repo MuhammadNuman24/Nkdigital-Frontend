@@ -1,21 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/nklogo.png';
 import { Search, User, Menu, Plus } from 'lucide-react';
 
 const Navbar = () => {
+    const navigate = useNavigate();
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        const userInfo = localStorage.getItem('userInfo');
+        if (userInfo) {
+            setUser(JSON.parse(userInfo));
+        }
+    }, []);
+
     return (
         <nav className="fixed top-0 w-full z-50 glass-morphism px-6 py-4 flex items-center justify-between">
             <div className="flex items-center gap-8">
-                <img
-                    src={logo}
-                    alt="NK DIGITAL"
-                    className="h-10 cursor-pointer object-contain"
-                    onClick={() => window.location.href = '/'}
-                />
+                <Link to="/">
+                    <img
+                        src={logo}
+                        alt="NK DIGITAL"
+                        className="h-10 cursor-pointer object-contain"
+                    />
+                </Link>
                 <div className="hidden md:flex items-center gap-6 text-sm font-medium">
-                    <a href="/" className="hover:text-primary transition-colors">Home</a>
-                    <a href="/explore" className="text-gray-500 hover:text-primary transition-colors">Explore</a>
-                    <a href="/create" className="text-gray-500 hover:text-primary transition-colors">Create</a>
+                    <Link to="/" className="hover:text-primary transition-colors">Home</Link>
+                    <Link to="/explore" className="text-gray-500 hover:text-primary transition-colors">Explore</Link>
+                    {user && (
+                        <Link to="/admin" className="text-gray-500 hover:text-primary transition-colors">Create</Link>
+                    )}
+                    <Link to="/about" className="text-gray-500 hover:text-primary transition-colors">About Us</Link>
+                    <Link to="/contact" className="text-gray-500 hover:text-primary transition-colors">Contact</Link>
                 </div>
             </div>
 
@@ -30,35 +46,43 @@ const Navbar = () => {
 
             <div className="flex items-center gap-4">
                 <div className="relative group">
-                    <button className="p-2 hover:bg-gray-100 rounded-full transition-colors flex items-center gap-2">
+                    <button className="p-2 hover:bg-gray-100 rounded-full transition-colors flex items-center gap-2" onClick={() => !user && navigate('/admin')}>
                         <User className="w-5 h-5 text-gray-600" />
-                        <span className="text-sm font-bold text-gray-600 hidden lg:block">Account</span>
+                        <span className="text-sm font-bold text-gray-600 hidden lg:block">
+                            {user ? user.name.split(' ')[0] : 'Account'}
+                        </span>
                     </button>
 
                     {/* Hover menu */}
                     <div className="absolute right-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                         <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 py-2 w-48 overflow-hidden">
-                            <button
-                                onClick={() => {
-                                    // Handle Admin Toggle in App.jsx or just navigate
-                                    // For now, let's assume switching to Admin view
-                                    const event = new CustomEvent('toggleAdmin', { detail: true });
-                                    window.dispatchEvent(event);
-                                }}
-                                className="w-full text-left px-4 py-3 text-sm font-bold text-gray-700 hover:bg-primary hover:text-white transition-colors flex items-center gap-2"
-                            >
-                                <Plus className="w-4 h-4" />
-                                Upload Blog
-                            </button>
-                            <button
-                                onClick={() => {
-                                    localStorage.removeItem('userInfo');
-                                    window.location.reload();
-                                }}
-                                className="w-full text-left px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 transition-colors flex items-center gap-2"
-                            >
-                                Logout
-                            </button>
+                            {user && (
+                                <Link
+                                    to="/admin"
+                                    className="w-full text-left px-4 py-3 text-sm font-bold text-gray-700 hover:bg-primary hover:text-white transition-colors flex items-center gap-2"
+                                >
+                                    <Plus className="w-4 h-4" />
+                                    Upload Blog
+                                </Link>
+                            )}
+                            {!user ? (
+                                <Link
+                                    to="/admin"
+                                    className="w-full text-left px-4 py-3 text-sm font-bold text-gray-700 hover:bg-gray-100 transition-colors flex items-center gap-2"
+                                >
+                                    Log In
+                                </Link>
+                            ) : (
+                                <button
+                                    onClick={() => {
+                                        localStorage.removeItem('userInfo');
+                                        window.location.reload();
+                                    }}
+                                    className="w-full text-left px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 transition-colors flex items-center gap-2"
+                                >
+                                    Logout
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
