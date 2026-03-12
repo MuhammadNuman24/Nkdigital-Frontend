@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const API = axios.create({
-    baseURL: 'https://nkdigital-backend.vercel.app/api',
+    baseURL: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+        ? 'http://localhost:5000/api' 
+        : 'https://nkdigital-backend.vercel.app/api',
 });
 
 // Set token in headers
@@ -14,6 +16,7 @@ API.interceptors.request.use((config) => {
 });
 
 export const fetchBlogs = () => API.get('/blogs');
+export const fetchBlog = (id) => API.get(`/blogs/${id}`);
 export const createBlog = (blogData) => API.post('/blogs', blogData);
 export const deleteBlog = (id) => API.delete(`/blogs/${id}`);
 
