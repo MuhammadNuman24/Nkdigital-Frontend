@@ -51,10 +51,10 @@ const PinCard = ({ pin }) => {
                                 href={pin.affiliateUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="bg-primary text-white p-2 rounded-full hover:bg-primary/90 transition-colors"
+                                className="bg-primary text-white px-4 py-2 rounded-full hover:bg-primary/90 transition-colors flex items-center gap-2 text-sm font-bold shadow-md"
                                 onClick={(e) => e.stopPropagation()}
                             >
-                                <ExternalLink className="w-4 h-4" />
+                                Buy Now <ExternalLink className="w-4 h-4" />
                             </a>
                         )}
                     </div>

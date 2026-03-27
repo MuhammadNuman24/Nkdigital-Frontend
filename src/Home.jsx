@@ -34,12 +34,12 @@ const Home = () => {
             <Navbar />
 
             {/* Category Bar */}
-            <div className="flex items-center justify-center gap-4 mb-8">
+            <div className="flex items-center justify-start md:justify-center gap-3 mb-8 w-full overflow-x-auto no-scrollbar px-2 sm:px-4 shrink-0">
                 {categories.map(cat => (
                     <button
                         key={cat}
                         onClick={() => setSelectedCategory(cat)}
-                        className={`px-4 py-2 rounded-full font-bold text-sm transition-all ${selectedCategory === cat
+                        className={`whitespace-nowrap flex-shrink-0 px-4 py-2 rounded-full font-bold text-sm transition-all ${selectedCategory === cat
                                 ? 'bg-black text-white shadow-lg'
                                 : 'bg-white text-gray-600 hover:bg-gray-100'
                             }`}

@@ -9,8 +9,13 @@ const SingleBlog = () => {
     const { id } = useParams();
     const [blog, setBlog] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
+        const userInfo = localStorage.getItem('userInfo');
+        if (userInfo) {
+            setIsAdmin(true);
+        }
         const getBlog = async () => {
             try {
                 const { data } = await fetchBlog(id);
@@ -104,6 +109,11 @@ const SingleBlog = () => {
                             <button className="ml-auto p-2 hover:bg-gray-100 rounded-full transition-colors">
                                 <Share2 size={20} className="text-gray-700" />
                             </button>
+                            {isAdmin && (
+                                <Link to={`/edit-blog/${blog._id}`} className="px-4 py-2 bg-black text-white rounded-full text-sm font-bold hover:bg-gray-800 transition-colors shadow-md">
+                                    Edit Post
+                                </Link>
+                            )}
                         </div>
                     </div>
 

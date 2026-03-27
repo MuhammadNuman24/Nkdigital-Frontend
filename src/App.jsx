@@ -4,6 +4,7 @@ import Home from './Home';
 import Admin from './Admin';
 import Auth from './Auth';
 import SingleBlog from './SingleBlog';
+import EditBlog from './EditBlog';
 
 import About from './About';
 import Contact from './Contact';
@@ -45,6 +46,10 @@ const App = () => {
           <Route 
             path="/admin" 
             element={user ? <Admin /> : <Auth setUser={setUser} />} 
+          />
+          <Route 
+            path="/edit-blog/:id" 
+            element={user ? <EditBlog /> : <Auth setUser={setUser} />} 
           />
         </Routes>
 

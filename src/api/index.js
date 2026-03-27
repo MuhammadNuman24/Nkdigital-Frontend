@@ -18,6 +18,7 @@ API.interceptors.request.use((config) => {
 export const fetchBlogs = () => API.get('/blogs');
 export const fetchBlog = (id) => API.get(`/blogs/${id}`);
 export const createBlog = (blogData) => API.post('/blogs', blogData);
+export const updateBlog = (id, blogData) => API.put(`/blogs/${id}`, blogData);
 export const deleteBlog = (id) => API.delete(`/blogs/${id}`);
 
 export const login = (email, password) => API.post('/users/login', { email, password });

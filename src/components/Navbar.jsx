@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/nklogo.png';
-import { Search, User, Menu, Plus } from 'lucide-react';
+import { Search, User, Menu, Plus, X } from 'lucide-react';
 
 const Navbar = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         const userInfo = localStorage.getItem('userInfo');
@@ -86,10 +87,37 @@ const Navbar = () => {
                         </div>
                     </div>
                 </div>
-                <button className="md:hidden p-2 hover:bg-gray-100 rounded-full transition-colors">
-                    <Menu className="w-5 h-5 text-gray-600" />
+                <button 
+                    className="md:hidden p-2 hover:bg-gray-100 rounded-full transition-colors"
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                >
+                    {isMobileMenuOpen ? <X className="w-5 h-5 text-gray-600" /> : <Menu className="w-5 h-5 text-gray-600" />}
                 </button>
             </div>
+
+            {/* Mobile Menu */}
+            {isMobileMenuOpen && (
+                <div className="md:hidden absolute top-full left-0 w-full bg-white border-t border-gray-100 shadow-xl py-4 flex flex-col items-center gap-4 text-sm font-medium">
+                    <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-primary transition-colors text-lg">Home</Link>
+                    <Link to="/explore" onClick={() => setIsMobileMenuOpen(false)} className="text-gray-500 hover:text-primary transition-colors text-lg">Explore</Link>
+                    {user && (
+                        <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)} className="text-gray-500 hover:text-primary transition-colors text-lg">Create</Link>
+                    )}
+                    <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className="text-gray-500 hover:text-primary transition-colors text-lg">About Us</Link>
+                    <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="text-gray-500 hover:text-primary transition-colors text-lg">Contact</Link>
+                    
+                    <div className="w-full px-6 mt-4">
+                        <div className="relative">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                            <input
+                                type="text"
+                                placeholder="Search..."
+                                className="w-full bg-gray-100 border-none rounded-full py-3 pl-10 pr-4 focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                            />
+                        </div>
+                    </div>
+                </div>
+            )}
         </nav>
     );
 };
