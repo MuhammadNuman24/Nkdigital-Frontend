@@ -1,10 +1,32 @@
-import React from 'react';
-import { ExternalLink, Heart, ArrowRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ExternalLink, Heart, ArrowRight, Pencil, Trash2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useNavigate, Link } from 'react-router-dom';
+import { deleteBlog } from '../api';
 
 const PinCard = ({ pin }) => {
     const navigate = useNavigate();
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    useEffect(() => {
+        const userInfo = localStorage.getItem('userInfo');
+        if (userInfo) {
+            setIsAdmin(true);
+        }
+    }, []);
+
+    const handleDelete = async (e) => {
+        e.stopPropagation();
+        if (window.confirm("Are you sure you want to delete this blog?")) {
+            try {
+                await deleteBlog(pin._id);
+                window.location.reload();
+            } catch (error) {
+                alert('Failed to delete: ' + error.message);
+            }
+        }
+    };
+
 
     return (
         <motion.div
@@ -24,9 +46,30 @@ const PinCard = ({ pin }) => {
 
                 {/* Hover Overlay */}
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4">
-                    <div className="flex justify-end">
+                    <div className="flex justify-between items-start">
+                        {isAdmin && (
+                            <div className="flex gap-2">
+                                <button 
+                                    className="bg-white/20 backdrop-blur-md text-white p-2 rounded-full hover:bg-white/40 transition-colors"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        navigate(`/edit-blog/${pin._id}`);
+                                    }}
+                                    title="Edit Blog"
+                                >
+                                    <Pencil className="w-4 h-4" />
+                                </button>
+                                <button 
+                                    className="bg-red-500/80 backdrop-blur-md text-white p-2 rounded-full hover:bg-red-600 transition-colors"
+                                    onClick={handleDelete}
+                                    title="Delete Blog"
+                                >
+                                    <Trash2 className="w-4 h-4" />
+                                </button>
+                            </div>
+                        )}
                         <button 
-                            className="bg-white/20 backdrop-blur-md text-white p-2 rounded-full hover:bg-white/40 transition-colors"
+                            className="bg-white/20 backdrop-blur-md text-white p-2 rounded-full hover:bg-white/40 transition-colors ml-auto"
                             onClick={(e) => {
                                 e.stopPropagation();
                                 // Add heart logic if needed
