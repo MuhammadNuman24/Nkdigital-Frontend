@@ -36,10 +36,10 @@ const PinCard = ({ pin }) => {
                         </button>
                     </div>
 
-                    <div className="flex items-center justify-between gap-2">
+                    <div className="flex flex-col gap-2 w-full mt-auto">
                         <Link
                             to={`/blog/${pin._id}`}
-                            className="bg-white text-black px-4 py-2 rounded-full flex items-center gap-2 text-sm font-bold truncate hover:bg-gray-100 transition-colors"
+                            className="w-full bg-white text-black px-4 py-2.5 rounded-full flex items-center justify-center gap-2 text-sm font-bold hover:bg-gray-100 transition-all shadow-sm"
                             onClick={(e) => e.stopPropagation()}
                         >
                             Read More
@@ -51,7 +51,7 @@ const PinCard = ({ pin }) => {
                                 href={pin.affiliateUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="bg-primary text-white px-4 py-2 rounded-full hover:bg-primary/90 transition-colors flex items-center gap-2 text-sm font-bold shadow-md"
+                                className="w-full bg-primary text-white px-4 py-2.5 rounded-full hover:bg-primary/90 transition-all flex items-center justify-center gap-2 text-sm font-bold shadow-md"
                                 onClick={(e) => e.stopPropagation()}
                             >
                                 Buy Now <ExternalLink className="w-4 h-4" />
